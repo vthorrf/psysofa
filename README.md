@@ -1,4 +1,4 @@
-psysofa: Situational Optimization Functionr Analysis
+psysofa: Situational Optimization Function Analysis
 =============
 
 This package was developed acompanying the first of the authors' PhD dissertation.
