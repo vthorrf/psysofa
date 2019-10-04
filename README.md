@@ -1,7 +1,7 @@
 psysofa: Situational Optimization Function Analysis
 =============
 
-This package was developed acompanying the first of the authors' PhD dissertation.
+This package was developed acompanying the authors' PhD dissertation.
 
 psysofa depends on semsfa and jagsUI.
 
