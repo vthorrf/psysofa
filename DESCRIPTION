@@ -1,0 +1,15 @@
+Package: psysofa
+Type: Package
+Title: Situational Optimiazation Function Analysis
+Version: 0.1.0
+YEAR: 2019, April
+Author: Vithor Rosa Franco
+Maintainer: Vithor Rosa Franco <vithorfranco@gmail.com>
+Description: Fits the models of the SOFA approach.
+Depends: semsfa, 
+         R2jags, 
+         jagsUI
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+URL: http://influencia.unb.br/
