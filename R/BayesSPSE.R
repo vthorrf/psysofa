@@ -28,7 +28,7 @@ BayesSPSE <- function(x,y,nk){
       dgr[l]  <- dg[l] + 1
       dg[l]   ~ dbinom( theta , l )
       for (i in 1:n) {
-        Z[i,l] <- ((x[i]^dgr[l]) - knots[l]) / sd(x)
+        Z[i,l] <- ((x[i] - knots[l]) / sd(x))^dgr[l]
       }
     }
 
