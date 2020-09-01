@@ -1,6 +1,6 @@
 BayesSPSE <- function(x,y,nk){
   require(jagsUI)
-  
+
   ### Assemble data into list for JAGS====
   y     = as.vector(scale(y))
   x     = x
@@ -8,7 +8,7 @@ BayesSPSE <- function(x,y,nk){
   nk    = tryCatch(nk, error=function(e) (round(sqrt(n-2),0) + 1) )
   knots = as.vector(c(0,quantile(x, seq(0,1,len=nk)),1))
   dataList = list( y=y, x=x, n=n, nk=nk, knots=knots )
-  
+
   # Define the model====
   modelString = "
   model {
@@ -20,7 +20,7 @@ BayesSPSE <- function(x,y,nk){
       eff[i]  <- 1/exp(v[i])
     }
     err  ~ dgamma( shape , rate )
-    
+
     ### Additive model
     b0 ~ dnorm( mub0 , sgm0 )
     for (l in 1:nk) {
@@ -46,28 +46,28 @@ BayesSPSE <- function(x,y,nk){
     mub0   ~ dnorm( 0 , 1 )
     sgm0   ~ dunif( 1e-2, 1e2 )
     theta  ~ dbeta( 1 , 1 )
-    
+
   }
   " # close quote for modelString
   model = textConnection(modelString)
-  
+
   # Run the chains====
   # Name the parameters to be monitored
   params <- c("eff","pred","Beta",'b0','dgr')
   # Define some MCMC parameters for JAGS
-  nthin    = 1    # How Much Thinning?
-  nchains  = 4    # How Many Chains?
-  nburnin  = 200  # How Many Burn-in Samples?
-  nadapt   = 500  # How Many adaptation Samples?
-  nsamples = 1700 # How Many Recorded Samples?
+  nthin    = 1     # How Much Thinning?
+  nchains  = 4     # How Many Chains?
+  nburnin  = 5000  # How Many Burn-in Samples?
+  nadapt   = 2000  # How Many adaptation Samples?
+  nsamples = 25000 # How Many Recorded Samples?
   ### Calling JAGS to sample
   startTime = proc.time()
   set.seed(666)
   samples <- jagsUI::jags(dataList, NULL, params, model.file=model,
-                          n.chains=nchains, n.adapt=nadapt, n.iter=nsamples, 
+                          n.chains=nchains, n.adapt=nadapt, n.iter=nsamples,
                           n.burnin=nburnin, n.thin=nthin, DIC=T)
   stopTime = proc.time(); elapsedTime = stopTime - startTime; methods::show(elapsedTime)
-  
+
   ### Inspect and diagnose the run====
   GRD <- tryCatch(coda::gelman.diag(samples$samples), error=function(e) NA)
   eff <- colMeans(samples$sims.list$eff)
