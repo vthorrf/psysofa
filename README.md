@@ -12,8 +12,8 @@ This package should be considered experimental until further along in developmen
 
 Using the 'remotes' package:
 
-  install.packages("remotes")
-  remotes::install_github("vthorrf/psysofa")
+    install.packages("remotes")
+    remotes::install_github("vthorrf/psysofa")
 
 # Reference #
 ---
